@@ -1,5 +1,6 @@
 import Foundation
-
+import RegexBuilder
+@available(macOS 13.0, *)
 @main
 public struct PasswordValidation {
 
@@ -17,7 +18,9 @@ public struct PasswordValidation {
     }
 
     func isValid(password: String) -> Bool {
-
-        return false
+        guard let regex = try? Regex("^[0-9]{6}$") else { return false}
+        let range = password.ranges(of: regex)
+        
+        return !range.isEmpty
     }
 }
